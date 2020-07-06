@@ -1,0 +1,53 @@
+import React, {Component} from 'react';
+import {AppRegistry, StyleSheet, Text, View} from 'react-native';
+
+import Swiper from 'react-native-swiper';
+import WalkthroughOne from './WalkThrough/WalkthroughOne';
+import WalkthroughTwo from './WalkThrough/WalkthroughTwo';
+import WalkthroughThree from './WalkThrough/WalkthroughThree';
+import WalkthroughFour from './WalkThrough/WalkthroughFour';
+
+const styles = StyleSheet.create({
+  buttonText: {
+    color: 'white',
+    fontSize: 50,
+  },
+});
+
+function Onboarding(props) {
+  var screenFour = <WalkthroughFour />;
+  if ('route' in props) {
+    screenFour = <WalkthroughFour navigation={props.route.params.navigation} />;
+  }
+  return (
+    <Swiper
+      showsButtons={true}
+      nextButton={<Text style={styles.buttonText}>›</Text>}
+      prevButton={<Text style={styles.buttonText}>‹</Text>}
+      dotColor="white"
+      activeDotColor="blue"
+      //   dot={() => {
+      //     return (
+      //       <View
+      //         style={{
+      //           backgroundColor: 'rgba(0,0,0,.2)',
+      //           width: 8,
+      //           height: 8,
+      //           borderRadius: 4,
+      //           marginLeft: 3,
+      //           marginRight: 3,
+      //           marginTop: 3,
+      //           marginBottom: 3,
+      //         }}
+      //       />
+      //     );
+      //   }}>
+      loop={false}>
+      <WalkthroughOne />
+      <WalkthroughTwo />
+      <WalkthroughThree />
+      {screenFour}
+    </Swiper>
+  );
+}
+export default Onboarding;
