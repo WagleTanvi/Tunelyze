@@ -15,8 +15,10 @@ const styles = StyleSheet.create({
 });
 
 function Onboarding(props) {
+  var first = true;
   var screenFour = <WalkthroughFour />;
   if ('route' in props) {
+    first = false;
     screenFour = <WalkthroughFour navigation={props.route.params.navigation} />;
   }
   return (
@@ -43,9 +45,9 @@ function Onboarding(props) {
       //     );
       //   }}>
       loop={false}>
-      <WalkthroughOne />
-      <WalkthroughTwo />
-      <WalkthroughThree />
+      <WalkthroughOne first={first} />
+      <WalkthroughTwo first={first} />
+      <WalkthroughThree first={first} />
       {screenFour}
     </Swiper>
   );
