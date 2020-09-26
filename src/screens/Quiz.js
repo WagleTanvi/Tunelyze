@@ -35,8 +35,10 @@ import Modal from 'react-native-modal';
 import {divide} from 'react-native-reanimated';
 import {Tooltip} from 'react-native-elements';
 import {RFPercentage} from 'react-native-responsive-fontsize';
+import QuitModal from './QuitModal';
+import {compareTwoStrings} from 'string-similarity';
 const times = ['1', '5', '10', '20', '30'];
-
+Sound.setCategory('Playback');
 const evaluateSong = (input, correct) => {
   if (input == null) {
     return false;
@@ -45,9 +47,25 @@ const evaluateSong = (input, correct) => {
   // console.log(input.toLowerCase());
   // console.log(correct.toLowerCase());
   var withoutParen = correct.toLowerCase().split(' (')[0];
+  var withoutDash = correct.toLowerCase().split(' -')[0];
+  console.log('Similar Song');
+  console.log(compareTwoStrings(input.toLowerCase().trim(), withoutParen));
+  console.log(
+    compareTwoStrings(input.toLowerCase().trim(), correct.toLowerCase()),
+  );
+  console.log(compareTwoStrings(input.toLowerCase().trim(), withoutDash));
   if (
     input.toLowerCase().trim() === correct.toLowerCase() ||
-    input.toLowerCase().trim() === withoutParen
+    input.toLowerCase().trim() === withoutParen ||
+    input.toLowerCase().trim() === withoutDash
+  ) {
+    return true;
+  }
+  if (
+    compareTwoStrings(input.toLowerCase().trim(), correct.toLowerCase()) >
+      0.8 ||
+    compareTwoStrings(input.toLowerCase().trim(), withoutParen) > 0.8 ||
+    compareTwoStrings(input.toLowerCase().trim(), withoutDash) > 0.8
   ) {
     return true;
   }
@@ -58,9 +76,16 @@ const evaluateArtist = (input, correct) => {
     return false;
   }
   for (artist of correct) {
+    console.log('Similar Artist');
+    console.log(compareTwoStrings(input, artist));
     // console.log(input.toLowerCase());
     // console.log(artist.toLowerCase());
     if (input.toLowerCase().trim() === artist.toLowerCase()) {
+      return true;
+    }
+    if (
+      compareTwoStrings(input.toLowerCase().trim(), artist.toLowerCase()) > 0.85
+    ) {
       return true;
     }
   }
@@ -77,6 +102,7 @@ function Quiz(props) {
   const [selectedTime, setTime] = useState();
   const [currentTimeout, setCurrentTimeout] = useState(null);
   const [isModalVisible, setModalVisible] = useState(false);
+  const [quitModalVisible, setQuitModal] = useState(false);
   const [keyboard, setKeyboard] = useState(false);
   const [timings, setTimingsArr] = useState([
     {label: '1', played: false},
@@ -90,24 +116,27 @@ function Quiz(props) {
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
+  const toggleQuitModal = () => {
+    setQuitModal(!quitModalVisible);
+  };
   //const screen = Dimensions.get('screen');
   const _keyboardDidShow = () => {
     const {height} = Dimensions.get('screen');
     console.log('Keyboard shown');
     console.log(height);
-    if (height <= 667) {
-      setKeyboard(true);
-    }
+    // if (height <= 667) {
+    setKeyboard(true);
+    //}
   };
 
   const _keyboardDidHide = () => {
     const {height} = Dimensions.get('screen');
     console.log('Keyboard Hidden');
     console.log(height);
-    if (height <= 667) {
-      console.log('hello');
-      setKeyboard(false);
-    }
+    // if (height <= 667) {
+    //   console.log('hello');
+    setKeyboard(false);
+    //}
   };
 
   const playSong = (url, seconds) => {
@@ -236,7 +265,9 @@ function Quiz(props) {
     props.navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
-          onPress={quit}
+          onPress={() => {
+            setQuitModal(true);
+          }}
           style={{
             paddingHorizontal: 10,
             paddingVertical: 5,
@@ -244,7 +275,12 @@ function Quiz(props) {
             backgroundColor: 'rgba(13,60,98,1)',
             borderRadius: 5,
           }}>
-          <Text style={{color: 'white', fontWeight: 'bold', fontSize: 18}}>
+          <Text
+            style={{
+              color: 'white',
+              fontWeight: 'bold',
+              fontSize: RFPercentage(2.5),
+            }}>
             QUIT
           </Text>
         </TouchableOpacity>
@@ -270,10 +306,13 @@ function Quiz(props) {
       }
     }
   }
-
+  function onDownSwipe() {
+    Keyboard.dismiss();
+  }
   return (
     <GestureRecognizer
       onSwipeLeft={onLeftSwipe}
+      onSwipeDown={onDownSwipe}
       config={config}
       style={styles.container}>
       {/* <View style={styles.container}> */}
@@ -361,29 +400,37 @@ function Quiz(props) {
                 <View style={styles.song2Row}>
                   <Text style={styles.song2}>Song</Text>
                   <TextInput
-                    placeholder="e.g. Best Day of My Life"
+                    placeholder="e.g. Rolling in the Deep"
                     style={styles.placeholder1}
                     onChangeText={text =>
                       props.setValueOfSong({type: 'songInput', value: text})
                     }
+                    autoCorrect={false}
                   />
                 </View>
                 <View style={styles.song2Row}>
                   <Text style={styles.song2}>Artist</Text>
                   <TextInput
-                    placeholder="e.g. American Authors"
+                    placeholder="e.g. Adele"
                     style={styles.placeholder1}
                     onChangeText={text =>
                       props.setValueOfSong({type: 'artistInput', value: text})
                     }
+                    autoCorrect={false}
                   />
                 </View>
-                <View style={styles.song2Row}>
+                <View style={styles.buttonRow}>
                   <TouchableOpacity style={styles.rect7} onPress={handleSubmit}>
                     <Text style={styles.submit1}>Submit</Text>
                   </TouchableOpacity>
                 </View>
-                <View style={styles.endWrapperFiller} />
+                <View
+                  style={
+                    keyboard
+                      ? styles.endWrapperFillerKeyboard
+                      : styles.endWrapperFiller
+                  }
+                />
               </View>
             </View>
           </View>
@@ -403,6 +450,23 @@ function Quiz(props) {
           nextScreen={prepareForNextScreen}
         />
       </Modal>
+      <Modal
+        style={{
+          justifyContent: 'center',
+          alignContent: 'center',
+          alignItems: 'center',
+        }}
+        isVisible={quitModalVisible}
+        onBackdropPress={() => {
+          setQuitModal();
+        }}>
+        <QuitModal
+          toggle={toggleQuitModal}
+          navigate={props.navigation}
+          quitFunction={quit}
+        />
+      </Modal>
+
       {/* </View> */}
     </GestureRecognizer>
   );
@@ -414,6 +478,15 @@ const styles = StyleSheet.create({
   },
   endWrapperFiller: {
     flex: 1,
+  },
+  endWrapperFillerKeyboard: {
+    flex: 0.2,
+  },
+  startWrapperFiller: {
+    flex: 1,
+  },
+  startWrapperFillerKeyboard: {
+    flex: 0,
   },
   image1: {
     flex: 1,
@@ -550,7 +623,7 @@ const styles = StyleSheet.create({
     //fontFamily: 'roboto-regular',
     color: 'rgba(255,255,255,1)',
     textAlign: 'center',
-    fontSize: RFPercentage(3),
+    fontSize: RFPercentage(2.7),
   },
   quizBox: {
     height: '40%',
@@ -589,7 +662,7 @@ const styles = StyleSheet.create({
     borderRadius: 23,
     flex: 1,
     justifyContent: 'center',
-    paddingTop: '5%',
+    paddingVertical: '5%',
   },
   rect5Keyboard: {
     backgroundColor: 'rgba(255,102,153,1)',
@@ -623,7 +696,7 @@ const styles = StyleSheet.create({
     //marginEnd: 10,
   },
   song2Row: {
-    flex: 2,
+    flex: 1.5,
     //backgroundColor: 'orange',
     //height: '25%',
     //height: 37,
@@ -636,8 +709,15 @@ const styles = StyleSheet.create({
     //marginBottom: 10,
     marginHorizontal: 10,
   },
+  buttonRow: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    paddingTop: 7,
+    marginHorizontal: 10,
+  },
   rect7: {
-    height: '75%',
+    //height: '75%',
     width: '35%',
     backgroundColor: 'rgba(74,134,232,1)',
     borderRadius: 10,

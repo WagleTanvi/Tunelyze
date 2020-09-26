@@ -127,9 +127,7 @@ class SpotifyRequests {
       var sp = new SpotifyWebAPI();
       await sp.setAccessToken(store.getState().authentication.accessToken);
       //console.log(genreId);
-      const resp = await sp.getUserPlaylists({
-        limit: 5,
-      });
+      const resp = await sp.getUserPlaylists();
       console.log(resp);
       for (playlist of resp.items) {
         playlists.push({

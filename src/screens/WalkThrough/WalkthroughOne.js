@@ -2,8 +2,45 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {RFPercentage} from 'react-native-responsive-fontsize';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {setOnboarding} from '../../redux/authenticationSlice';
+import {connect} from 'react-redux';
 Icon.loadFont();
 function WalkthroughOne(props) {
+  var Skip;
+  if (props.first) {
+    Skip = (
+      <View
+        style={{
+          justifyContent: 'center',
+          //backgroundColor: 'red',
+          width: '100%',
+          flex: 0.3,
+          alignItems: 'flex-end',
+        }}>
+        <TouchableOpacity
+          style={{
+            marginEnd: '5%',
+            backgroundColor: 'rgba(105,156,252,1)',
+            padding: '2%',
+            borderRadius: 5,
+          }}
+          onPress={() => {
+            props.setOnboarding(true);
+          }}>
+          <Text
+            style={{
+              fontFamily: 'Acme',
+              color: 'rgba(255,255,255,1)',
+              //width: '90%',
+              fontSize: RFPercentage(2.7),
+            }}>
+            SKIP
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.tunelyze}>TUNELYZE</Text>
@@ -43,6 +80,7 @@ function WalkthroughOne(props) {
         </View>
       </View>
       <Icon name="music" style={styles.icon} />
+      {Skip}
       <View style={styles.endWrapperFiller} />
     </View>
   );
@@ -62,7 +100,7 @@ const styles = StyleSheet.create({
   analyzeTheTune: {
     //paddingTop: '3%',
     //backgroundColor: 'purple',
-    // fontFamily: 'roboto-700',
+    fontFamily: 'Acme',
     color: 'rgba(255,255,255,1)',
     width: '100%',
     fontSize: RFPercentage(4),
@@ -77,7 +115,7 @@ const styles = StyleSheet.create({
     flex: 1,
     // fontFamily: 'roboto-700',
     color: 'rgba(255,255,255,1)',
-    fontSize: RFPercentage(10),
+    fontSize: RFPercentage(8),
     textAlign: 'center',
     fontWeight: 'bold',
   },
@@ -111,6 +149,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   one: {
+    fontFamily: 'Acme',
     // fontFamily: 'roboto-700',
     color: 'rgba(255,255,255,1)',
     fontSize: RFPercentage(5),
@@ -131,7 +170,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   descrip: {
-    // fontFamily: 'roboto-700',
+    fontFamily: 'Acme',
     color: 'rgba(255,255,255,1)',
     //width: '90%',
     fontSize: RFPercentage(3),
@@ -147,8 +186,18 @@ const styles = StyleSheet.create({
     paddingTop: '10%',
     color: 'rgba(255,255,255,1)',
     fontSize: RFPercentage(15),
-    flex: 1.3,
+    flex: 1.0,
   },
 });
-
-export default WalkthroughOne;
+const mapStateToProps = state => {
+  return {
+    onboarding: state.authentication.onboarding,
+  };
+};
+const mapDispatchToProps = {
+  setOnboarding,
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(WalkthroughOne);

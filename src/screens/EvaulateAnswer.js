@@ -6,6 +6,7 @@ import {
   ImageBackground,
   Text,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Col, Row, Grid} from 'react-native-easy-grid';
@@ -49,6 +50,9 @@ function EvaluateAnswer(props) {
     setIcons(iconsArr);
   }
   useEffect(() => {
+    if (props.songNum == 5) {
+      Keyboard.dismiss();
+    }
     getMessage();
   }, []);
   function tryAgain() {
@@ -95,10 +99,10 @@ function EvaluateAnswer(props) {
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderColor: '#A0A0A0',
-                borderTopWidth: 2,
-                borderLeftWidth: 2,
-                borderBottomWidth: 2,
+                // borderColor: '#A0A0A0',
+                // borderTopWidth: 2,
+                // borderLeftWidth: 2,
+                // borderBottomWidth: 2,
               }}>
               {icons.map((element, index) => {
                 return (
@@ -120,17 +124,17 @@ function EvaluateAnswer(props) {
                 flex: 5,
                 justifyContent: 'center',
                 alignItems: 'center',
-                borderColor: '#A0A0A0',
-                borderTopWidth: 2,
-                borderRightWidth: 2,
-                borderBottomWidth: 2,
+                // borderColor: '#A0A0A0',
+                // borderTopWidth: 2,
+                // borderRightWidth: 2,
+                // borderBottomWidth: 2,
               }}>
               <Row
                 style={{
                   flex: 5,
                   justifyContent: 'center',
                   alignItems: 'center',
-                  borderColor: '#A0A0A0',
+                  // borderColor: '#A0A0A0',
                   width: '100%',
                 }}>
                 <Text style={styles.text}>{song}</Text>
@@ -156,6 +160,7 @@ function EvaluateAnswer(props) {
               props.toggle();
               props.nextScreen(count);
               if (props.songNum == 5) {
+                Keyboard.dismiss();
                 props.navigate.navigate('ScoreBoard');
               } else {
                 props.navigate.push('Quiz');
@@ -209,9 +214,9 @@ const styles = StyleSheet.create({
   howToPlay: {
     //fontFamily: 'amaranth-regular',
     color: 'rgba(0,0,0,1)',
-    fontSize: 20,
     textAlign: 'center',
     fontSize: RFPercentage(2),
+    //fontWeight: 'bold',
   },
   text: {
     color: 'white',

@@ -6,6 +6,7 @@ import {
   ImageBackground,
   Text,
   TouchableOpacity,
+  Keyboard,
 } from 'react-native';
 import Svg, {Ellipse} from 'react-native-svg';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
@@ -20,7 +21,6 @@ import {
 import {RFPercentage} from 'react-native-responsive-fontsize';
 EntypoIcon.loadFont();
 IoniIcon.loadFont();
-
 function SongScoreRow(props) {
   console.log(props);
   const artist = props.element.artists.join(', ');

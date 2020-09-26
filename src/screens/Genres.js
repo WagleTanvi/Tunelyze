@@ -16,6 +16,7 @@ import {connect} from 'react-redux';
 import PlaylistPicker from './PlaylistPicker';
 import Modal from 'react-native-modal';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import SearchPlaylist from './SearchPlaylist';
 const genresList = ['pop', 'rock', 'country', 'rnb', 'desi'];
 Icon.loadFont();
 
@@ -58,7 +59,7 @@ function GenreRow(props) {
               <Text
                 style={{
                   fontWeight: 'bold',
-                  fontSize: RFPercentage(3),
+                  fontSize: RFPercentage(2.8),
                   //fontFamily: 'amaranth-regular',
                 }}>
                 {props.name}
@@ -118,9 +119,6 @@ function Genres(props) {
   };
   const toggleModal = playlist => {
     setModalVisible(!isModalVisible);
-    // if (playlist) {
-    //   props.navigation.navigate('Quiz', {id: playlist});
-    // }
   };
   useLayoutEffect(() => {
     props.navigation.setOptions({
@@ -129,6 +127,19 @@ function Genres(props) {
       ),
     });
   }, [props.navigation]);
+
+  var playlistModal = (
+    <PlaylistPicker
+      id={selectedGenre}
+      toggle={toggleModal}
+      navigate={props.navigation}
+    />
+  );
+  if (selectedGenre == null) {
+    playlistModal = (
+      <SearchPlaylist toggle={toggleModal} navigate={props.navigation} />
+    );
+  }
   return (
     <View style={{flex: 1}}>
       <ImageBackground
@@ -188,11 +199,7 @@ function Genres(props) {
         </Grid>
       </ImageBackground>
       <Modal isVisible={isModalVisible} onBackdropPress={() => toggleModal()}>
-        <PlaylistPicker
-          id={selectedGenre}
-          toggle={toggleModal}
-          navigate={props.navigation}
-        />
+        {playlistModal}
       </Modal>
     </View>
   );
@@ -226,40 +233,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     //shadowOpacity: 1,
     justifyContent: 'center',
-  },
-  image3: {
-    width: 200,
-    height: 200,
-    marginTop: 40,
-    borderRadius: 100,
-  },
-  welcomeUser: {
-    // fontFamily: 'roboto-regular',
-    color: 'rgba(255,255,255,1)',
-    height: 40,
-    textAlign: 'center',
-    fontSize: 40,
-    marginTop: 46,
-    fontWeight: 'bold',
-    alignContent: 'center',
-  },
-  button1: {
-    height: 75,
-    backgroundColor: 'rgba(255,102,153,1)',
-    borderRadius: 9,
-    shadowOpacity: 1,
-    marginTop: 80,
-    marginLeft: 26,
-    marginRight: 25,
-  },
-  startListening: {
-    // fontFamily: 'amaranth-regular',
-    color: 'rgba(255,255,255,1)',
-    fontSize: 35,
-    textAlign: 'center',
-    marginTop: 15,
-    marginLeft: 31,
-    marginRight: 31,
   },
 });
 

@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
     //marginHorizontal: '15%',
     //width: 'contain',
-    width: '60%',
+    width: '70%',
     //height: 61,
     backgroundColor: 'rgba(13,60,98,1)',
     borderRadius: 14,
@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     borderWidth: 2,
     borderColor: 'white',
+    //paddingHorizontal: '3%',
   },
   startPlaying: {
     //fontFamily: 'roboto-700',

@@ -14,14 +14,7 @@ class AuthenticationHandler {
       usePKCE: true,
       clientId: 'dd62ca126120401ea65ea6a77d96ef56',
       redirectUrl: 'com.Tunelyze:/oauthredirect',
-      scopes: [
-        'playlist-read-private',
-        'playlist-modify-public',
-        'playlist-modify-private',
-        'user-library-read',
-        'user-library-modify',
-        'user-top-read',
-      ],
+      scopes: ['user-read-private', 'user-read-email', 'playlist-read-private'],
       serviceConfiguration: {
         authorizationEndpoint: 'https://accounts.spotify.com/authorize',
         tokenEndpoint: 'https://accounts.spotify.com/api/token',

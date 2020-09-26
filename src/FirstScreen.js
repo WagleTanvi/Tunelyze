@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 
 import LoginScreen from './loginScreen';
 import Main from './screens/Main';
@@ -23,17 +23,39 @@ import {createDrawerNavigator} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Onboarding from './screens/Onboarding';
 import {setOnboarding} from './redux/authenticationSlice';
+import {RFPercentage} from 'react-native-responsive-fontsize';
+import AsyncStorage from '@react-native-community/async-storage';
+import SplashScreen from './SplashScreen';
 Icon.loadFont();
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 function FirstScreen(props) {
-  console.log(props.onboarding);
+  const [loading, setLoading] = useState(true);
+  // async function checkOnboarding() {
+  //   var data;
+  //   try {
+  //     console.log(await AsyncStorage.getAllKeys());
+  //     data = await AsyncStorage.getItem('persist:authentication');
+  //   } catch (e) {
+  //     console.log('ERROR');
+  //     console.log(e);
+  //   }
+  //   console.log('Onboarding: ');
+  //   data = JSON.parse(data);
+  //   console.log(!data.onboarding);
+  //   setLoading(!data.onboarding);
+  // }
+  // useEffect(() => {
+  //   checkOnboarding();
+  // }, []);
+  //console.log(loading);
+  // if (loading) {
+  //   return <SplashScreen />;
+  // }
   if (!props.onboarding) {
-    console.log('WHAT');
     return <Onboarding />;
   } else {
-    console.log('YES');
     return (
       <NavigationContainer>
         <Stack.Navigator>
@@ -67,7 +89,7 @@ function FirstScreen(props) {
               headerTitleStyle: {
                 color: 'white',
                 fontWeight: 'bold',
-                fontSize: 35,
+                fontSize: RFPercentage(4.5),
               },
               //headerTitle: props => <LogoTitle {...props} />,
             }}
@@ -95,7 +117,7 @@ function FirstScreen(props) {
               headerTitleStyle: {
                 color: 'white',
                 fontWeight: 'bold',
-                fontSize: 35,
+                fontSize: RFPercentage(4.5),
               },
               gestureEnabled: false,
               headerLeft: null,
@@ -116,7 +138,7 @@ function FirstScreen(props) {
               headerTitleStyle: {
                 color: 'white',
                 fontWeight: 'bold',
-                fontSize: 35,
+                fontSize: RFPercentage(4.5),
               },
               gestureEnabled: false,
             }}

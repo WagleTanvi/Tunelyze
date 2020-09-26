@@ -7,24 +7,62 @@ import {
   Text,
   Animated,
   Easing,
+  TouchableOpacity,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {RFPercentage} from 'react-native-responsive-fontsize';
+import {setOnboarding} from '../../redux/authenticationSlice';
+import {connect} from 'react-redux';
 Icon.loadFont();
 function WalkthroughTwo(props) {
-  const animatedValue = new Animated.Value(0);
-  animate = () => {
-    console.log('hola');
-    animatedValue.setValue(0);
-    Animated.timing(animatedValue, {
-      toValue: 150,
-      duration: 5000,
-      useNativeDriver: true,
-    }).start();
-  };
-  useEffect(() => {
-    animate();
-  }, []);
+  //console.log(props.first);
+  var Skip;
+  if (props.first) {
+    Skip = (
+      <View
+        style={{
+          justifyContent: 'center',
+          //backgroundColor: 'red',
+          width: '100%',
+          flex: 0.3,
+          alignItems: 'flex-end',
+        }}>
+        <TouchableOpacity
+          style={{
+            marginEnd: '5%',
+            backgroundColor: 'rgba(105,156,252,1)',
+            padding: '2%',
+            borderRadius: 5,
+          }}
+          onPress={() => {
+            props.setOnboarding(true);
+          }}>
+          <Text
+            style={{
+              fontFamily: 'Acme',
+              color: 'rgba(255,255,255,1)',
+              //width: '90%',
+              fontSize: RFPercentage(2.7),
+            }}>
+            SKIP
+          </Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+  // const animatedValue = new Animated.Value(0);
+  // animate = () => {
+  //   console.log('hola');
+  //   animatedValue.setValue(0);
+  //   Animated.timing(animatedValue, {
+  //     toValue: 150,
+  //     duration: 5000,
+  //     useNativeDriver: true,
+  //   }).start();
+  // };
+  // useEffect(() => {
+  //   animate();
+  // }, []);
 
   return (
     <View style={styles.container}>
@@ -63,6 +101,7 @@ function WalkthroughTwo(props) {
       <Text style={styles.tunelyze2}>
         DOUBLE your score if you get the song AND Artist!
       </Text>
+      {Skip}
     </View>
   );
 }
@@ -144,5 +183,15 @@ const styles = StyleSheet.create({
     fontFamily: 'Acme-Regular',
   },
 });
-
-export default WalkthroughTwo;
+const mapStateToProps = state => {
+  return {
+    onboarding: state.authentication.onboarding,
+  };
+};
+const mapDispatchToProps = {
+  setOnboarding,
+};
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(WalkthroughTwo);
