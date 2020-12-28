@@ -8,8 +8,6 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import spotifyReq from './spotifyRequests';
-import {set} from 'react-native-reanimated';
-
 function Welcome(props) {
   const [image, setImage] = useState(
     'https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y',
