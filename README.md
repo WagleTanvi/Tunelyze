@@ -1,4 +1,4 @@
-# Tunelyze  
+<h1><a href="https://tunelyze.wixsite.com/tunelyze"> Tunelyze </a></h1>
 <img src=assets/SplashIcon.png width=100 />   
 <i>Analyze the Tune! Tunelyze is a mobile application built with React Native and leveraging the Spotify API to have users guess a song after listening to a brief clip.</i>
 
