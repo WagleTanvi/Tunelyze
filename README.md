@@ -1,6 +1,6 @@
 # Tunelyze  
 <img src=assets/SplashIcon.png width=100 />   
-<i>Analyze the Tune! Tunelyze is a mobile application build with React Native and leveraging the Spotify API to have users guess a song after listening to a brief clip.</i>
+<i>Analyze the Tune! Tunelyze is a mobile application built with React Native and leveraging the Spotify API to have users guess a song after listening to a brief clip.</i>
 
 ## What it looks like 
 
