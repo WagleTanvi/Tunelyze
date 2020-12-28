@@ -32,7 +32,6 @@ import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
 import spotifyReq from './spotifyRequests';
 import EvaluateAnswer from './EvaulateAnswer';
 import Modal from 'react-native-modal';
-import {divide} from 'react-native-reanimated';
 import {Tooltip} from 'react-native-elements';
 import {RFPercentage} from 'react-native-responsive-fontsize';
 import QuitModal from './QuitModal';

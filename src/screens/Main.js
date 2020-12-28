@@ -1,4 +1,5 @@
 import React, {Component, useEffect, useState} from 'react';
+import analytics, {firebase} from '@react-native-firebase/analytics';
 import {
   StyleSheet,
   View,
@@ -49,6 +50,7 @@ function Main(props) {
         <TouchableOpacity
           style={styles.button}
           onPress={async () => {
+            //await analytics().logEvent('button_press');
             setActivityLoading(true);
             //console.log(props);
             var authenticated = null;
@@ -59,7 +61,6 @@ function Main(props) {
               props.authentication.accessToken == null
             ) {
               authenticationObject = await authHandler.onLogin();
-              //console.log(authenticationObject.code);
               if ('message' in authenticationObject) {
                 setActivityLoading(false);
                 alert('You could not be authenticated!');

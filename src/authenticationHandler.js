@@ -1,12 +1,8 @@
 import {authorize, refresh} from 'react-native-app-auth';
 import SpotifyWebAPI from 'spotify-web-api-js';
 import axios from 'axios';
+import analytics, {firebase} from '@react-native-firebase/analytics';
 
-const getSpotifyCredentials = async () => {
-  const res = await axios.get('http://localhost:3000/authenticate');
-  const spotifyCredentials = res.data;
-  return spotifyCredentials;
-};
 
 class AuthenticationHandler {
   constructor() {
@@ -31,6 +27,7 @@ class AuthenticationHandler {
       //console.log(this.spotifyAuthConfig);
       const result = await authorize(this.spotifyAuthConfig);
       console.log(result);
+      //await analytics().logEvent('authorize', {});
       //const accessToken = result.accessToken;
       // var sp = new SpotifyWebAPI();
       // await sp.setAccessToken(accessToken);
@@ -55,8 +52,9 @@ class AuthenticationHandler {
       //alert(JSON.stringify(result));
       return result;
     } catch (error) {
+      //await analytics().logEvent('authorize_error', JSON.stringify(error));
       console.log(JSON.stringify(error));
-      return error;
+      return 'error';
     }
   }
 
