@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {RFPercentage} from 'react-native-responsive-fontsize';
 import {Container, Header, Content, Card, CardItem, Body} from 'native-base';
-import spotifyReq from './spotifyRequests';
+import spotifyReq from '../model/spotifyRequests';
 import {Col, Row, Grid} from 'react-native-easy-grid';
 import {connect} from 'react-redux';
 import PlaylistPicker from './PlaylistPicker';

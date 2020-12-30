@@ -1,5 +1,5 @@
 import React, {Component, useEffect, useState} from 'react';
-import analytics, {firebase} from '@react-native-firebase/analytics';
+//import analytics, {firebase} from '@react-native-firebase/analytics';
 import {
   StyleSheet,
   View,
@@ -9,7 +9,7 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
-import authHandler from '../authenticationHandler';
+import authHandler from '../model/authenticationHandler';
 import {connect} from 'react-redux';
 import {
   setAccessToken,

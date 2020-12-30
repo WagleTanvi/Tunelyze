@@ -29,7 +29,7 @@ import {
   setSelectedPlaylist,
 } from '../redux/gameSlice';
 import GestureRecognizer, {swipeDirections} from 'react-native-swipe-gestures';
-import spotifyReq from './spotifyRequests';
+import spotifyReq from '../model/spotifyRequests';
 import EvaluateAnswer from './EvaulateAnswer';
 import Modal from 'react-native-modal';
 import {Tooltip} from 'react-native-elements';

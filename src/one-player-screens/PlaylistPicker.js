@@ -6,92 +6,42 @@ import {
   ImageBackground,
   Text,
   TouchableOpacity,
-  FlatList,
-  Modal,
-  ActivityIndicator,
 } from 'react-native';
-import {setSelectedPlaylist} from '../redux/gameSlice';
+import {
+  setSongNum,
+  setTotalScore,
+  setSongInArray,
+  setSongArray,
+  setValueOfSong,
+  setSelectedPlaylist,
+} from '../redux/gameSlice';
 import {connect} from 'react-redux';
-import spotifyReq from './spotifyRequests';
-import {SearchBar, ListItem} from 'react-native-elements';
+import Modal from 'react-native-modal';
+import spotifyReq from '../model/spotifyRequests';
+import {Picker} from '@react-native-community/picker';
+import {Button} from 'native-base';
 import {RFPercentage} from 'react-native-responsive-fontsize';
-
-function SearchPlaylist(props) {
-  const [playlistsData, setPlaylists] = useState([]);
-  const [filteredPlaylist, setFiltered] = useState([]);
-  const [search, setSearch] = useState();
-  const [loading, setLoading] = useState(false);
+function PlaylistPicker(props) {
+  const [playlists, setPlaylists] = useState([]);
+  const [selectedPlaylist, setSelected] = useState();
   async function getPlaylists() {
-    setLoading(true);
     var resp;
     console.log(props.id);
     if (props.id === null || props.id == undefined) {
       console.log('yeet');
       resp = await spotifyReq.getUserPlaylists();
     } else {
-      console.log('something went wrong');
+      resp = await spotifyReq.getPlaylists(props.id);
     }
+    const mid = Math.round(resp.length / 2 - 1);
+    console.log(mid);
     setPlaylists(resp);
-    setFiltered(resp);
-    console.log(resp);
-    setLoading(false);
+    setSelected(resp[mid].id);
   }
-  var List = (
-    <FlatList
-      data={filteredPlaylist}
-      extraData={filteredPlaylist}
-      renderItem={({item}) => (
-        <TouchableOpacity
-          onPress={() => {
-            console.log(item);
-            props.setSelectedPlaylist(item.name);
-            props.navigate.push('Quiz', {
-              id: item.id,
-              name: item.name,
-              limit: item.limit,
-            });
-            props.toggle();
-          }}>
-          <ListItem
-            containerStyle={{
-              backgroundColor: 'rgba(255,102,153,1)',
-              alignItems: 'center',
-              margin: '1%',
-              borderRadius: 10,
-              justifyContent: 'center',
-            }}
-            bottomDivider
-            title={item.name}
-            titleStyle={{color: 'white', textAlign: 'center', opacity: 1}}
-          />
-        </TouchableOpacity>
-      )}
-      keyExtractor={item => item.id}
-    />
-  );
-  if (loading) {
-    List = (
-      <ActivityIndicator
-        animating={loading}
-        color="#bc2b78"
-        size="large"
-        style={{marginTop: '10%'}}
-      />
-    );
-  }
+
   useEffect(() => {
     getPlaylists();
   }, []);
-
-  function filterSearch(search) {
-    setFiltered(
-      playlistsData.filter(item =>
-        item.name.toLowerCase().includes(search.toLowerCase()),
-      ),
-    );
-    setSearch(search);
-    console.log(search);
-  }
   return (
     <View style={styles.content}>
       <Text
@@ -109,19 +59,56 @@ function SearchPlaylist(props) {
           //height: '100%',
           width: '100%',
           flex: 4,
-          borderColor: '#CCCCCC',
-          borderWidth: 1,
-          //   backgroundColor: '#CCCCCC',
+          //backgroundColor: '#CCCCCC',
         }}>
-        <SearchBar
-          lightTheme={true}
-          placeholder="Search Playlist..."
-          value={search}
-          onChangeText={filterSearch}
-        />
-        {List}
+        <Picker
+          selectedValue={selectedPlaylist}
+          style={{
+            //height: 400,
+            justifyContent: 'center',
+            //borderColor: 'black',
+            //borderWidth: 2,
+            height: '100%',
+            width: '100%',
+            //backgroundColor: '#CCCCCC',
+          }}
+          itemStyle={{fontSize: RFPercentage(3), margin: '2%'}}
+          onValueChange={(itemValue, itemIndex) => {
+            setSelected(itemValue);
+            console.log(selectedPlaylist);
+          }}>
+          {playlists.map((element, index) => {
+            //console.log(selectedPlaylist);
+            return (
+              <Picker.Item
+                key={element.id}
+                label={element.name}
+                value={element.id}
+              />
+            );
+          })}
+        </Picker>
       </View>
       <View style={{flexDirection: 'row', flex: 1}}>
+        <TouchableOpacity
+          style={styles.button1}
+          onPress={() => {
+            var selected;
+            for (playlist of playlists) {
+              if (playlist.id == selectedPlaylist) {
+                selected = playlist;
+              }
+            }
+            props.setSelectedPlaylist(selected.name);
+            props.navigate.push('Quiz', {
+              id: selected.id,
+              name: selected.name,
+              limit: selected.limit,
+            });
+            props.toggle();
+          }}>
+          <Text style={styles.howToPlay}>Select</Text>
+        </TouchableOpacity>
         <TouchableOpacity style={styles.button2} onPress={props.toggle}>
           <Text style={styles.howToPlay}>Close</Text>
         </TouchableOpacity>
@@ -131,9 +118,6 @@ function SearchPlaylist(props) {
 }
 
 const styles = StyleSheet.create({
-  itemContent: {
-    backgroundColor: 'white',
-  },
   content: {
     backgroundColor: 'white',
     padding: 22,
@@ -183,4 +167,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(SearchPlaylist);
+)(PlaylistPicker);
