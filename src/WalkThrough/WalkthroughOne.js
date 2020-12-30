@@ -3,7 +3,7 @@ import {StyleSheet, View, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {RFPercentage} from 'react-native-responsive-fontsize';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {setOnboarding} from '../../redux/authenticationSlice';
+import {setOnboarding} from '../redux/authenticationSlice';
 import {connect} from 'react-redux';
 Icon.loadFont();
 function WalkthroughOne(props) {

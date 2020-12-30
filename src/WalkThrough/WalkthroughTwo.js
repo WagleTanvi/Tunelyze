@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {RFPercentage} from 'react-native-responsive-fontsize';
-import {setOnboarding} from '../../redux/authenticationSlice';
+import {setOnboarding} from '../redux/authenticationSlice';
 import {connect} from 'react-redux';
 Icon.loadFont();
 function WalkthroughTwo(props) {
@@ -77,7 +77,7 @@ function WalkthroughTwo(props) {
           <Text style={styles.loremIpsum5}>+1</Text>
         </View> */}
         <Image
-          source={require('../../assets/images/time.png')}
+          source={require('../assets/images/time.png')}
           resizeMode="contain"
           style={styles.image}
         />

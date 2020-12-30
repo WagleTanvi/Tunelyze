@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import {connect} from 'react-redux';
-import {setOnboarding} from '../../redux/authenticationSlice';
+import {setOnboarding} from '../redux/authenticationSlice';
 import {useNavigation} from '@react-navigation/native';
 import {RFPercentage} from 'react-native-responsive-fontsize';
 Icon.loadFont();
@@ -21,7 +21,7 @@ function WalkthroughFour(props) {
       </View>
       <View style={styles.imageContainer}>
         <Image
-          source={require('../../assets/images/score.png')}
+          source={require('../assets/images/score.png')}
           resizeMode="contain"
           style={styles.image}
         />

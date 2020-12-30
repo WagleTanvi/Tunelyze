@@ -1,6 +1,6 @@
 import React, {Component, useEffect, useState} from 'react';
 
-import Main from 'Main';
+import Main from './Main';
 import {Provider, connect} from 'react-redux';
 import {store, persistor} from './redux/store';
 import Welcome from './one-player-screens/Welcome';

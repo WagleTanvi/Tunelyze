@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import {RFPercentage} from 'react-native-responsive-fontsize';
-import {setOnboarding} from '../../redux/authenticationSlice';
+import {setOnboarding} from '../redux/authenticationSlice';
 import {connect} from 'react-redux';
 function WalkthroughThree(props) {
   var Skip;
@@ -51,7 +51,7 @@ function WalkthroughThree(props) {
       </Text>
       <View style={styles.box}>
         <Image
-          source={require('../../assets/images/guess.png')}
+          source={require('../assets/images/guess.png')}
           resizeMode="contain"
           style={styles.image}
         />

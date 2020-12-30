@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import {AppRegistry, StyleSheet, Text, View} from 'react-native';
 
 import Swiper from 'react-native-swiper';
-import WalkthroughOne from './WalkThrough/WalkthroughOne';
-import WalkthroughTwo from './WalkThrough/WalkthroughTwo';
-import WalkthroughThree from './WalkThrough/WalkthroughThree';
-import WalkthroughFour from './WalkThrough/WalkthroughFour';
+import WalkthroughOne from './WalkthroughOne';
+import WalkthroughTwo from './WalkthroughTwo';
+import WalkthroughThree from './WalkthroughThree';
+import WalkthroughFour from './WalkthroughFour';
 
 const styles = StyleSheet.create({
   buttonText: {

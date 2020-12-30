@@ -9,14 +9,14 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
-import authHandler from '../model/authenticationHandler';
+import authHandler from './model/authenticationHandler';
 import {connect} from 'react-redux';
 import {
   setAccessToken,
   setRefreshToken,
   setExpr,
   setSigingIn,
-} from '../redux/authenticationSlice';
+} from './redux/authenticationSlice';
 import Modal from 'react-native-modal';
 import {RFPercentage} from 'react-native-responsive-fontsize';
 
@@ -29,12 +29,12 @@ function Main(props) {
   //this.props.navigation.dispatch(resetAction);
   return (
     <ImageBackground
-      source={require('../assets/images/james-owen-c-NBiJrhwdM-unsplash.jpg')}
+      source={require('./assets/images/james-owen-c-NBiJrhwdM-unsplash.jpg')}
       resizeMode="stretch"
       style={styles.image}
       imageStyle={styles.image_imageStyle}>
       <Image
-        source={require('../assets/images/Picture1.png')}
+        source={require('./assets/images/Picture1.png')}
         resizeMode="contain"
         style={styles.image2}
       />

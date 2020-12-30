@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-import Main from './src/one-player-screens/Main';
 import {
   View,
   Button,
@@ -15,9 +14,7 @@ import Welcome from './src/one-player-screens/Welcome';
 import Genre from './src/one-player-screens/Genres';
 import PlaylistPicker from './src/one-player-screens/PlaylistPicker';
 import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import Quiz from './src/one-player-screens/Quiz';
-import ScoreBoard from './src/one-player-screens/ScoreBoard';
+import {createStackNavigator} from '@react-navigation/stack';;
 import {createDrawerNavigator} from '@react-navigation/drawer';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import FirstScreen from './src/FirstScreen';
