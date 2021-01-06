@@ -34,7 +34,9 @@ import React, {
   import {RFPercentage} from 'react-native-responsive-fontsize';
   import QuitModal from '../screens/QuitModal';
   import {compareTwoStrings} from 'string-similarity';
-  import Svg, { Circle } from "react-native-svg";
+  import Svg, { Circle, Text as SvgText } from "react-native-svg";
+
+
 
   Sound.setCategory('Playback');
   const evaluateSong = (input, correct) => {
@@ -270,27 +272,30 @@ import React, {
           </Text>
           <View style={styles.headerBox}>
             <View style={styles.rect1}>
-                <Text style={styles.songNumText}>Song {props.songNum}/5 <Text  style={styles.time}> - {selectedTime} seconds</Text> </Text>
+                <Text style={styles.songNumText}>Song {props.songNum}/5 <Text  style={styles.time}> - {selectedTime} secs</Text> </Text>
             </View>
             <View style={styles.rect2}>
                 <Text style={styles.scoreText}>{props.score}</Text>
             </View>
         </View>
         <TouchableOpacity
-          style={styles.joinGameButton}
+          style={styles.playSongButton}
           onPress={() =>{
             
           }}>
           <Text style={styles.buttonText}>Play Song</Text>
         </TouchableOpacity>
         <View style={styles.circleContainer}>
-            <Svg height="100%" width="100%">
+           <TouchableOpacity style={{flex: 1, alignItems: 'center', width: '100%', justifyContent: 'center'}}>
+            <Svg height="100%" width="100%" style={{shadowOpacity: 1}}>
                 <Circle cx="50%" cy="50%" r="45%" fill="white" />
                 <Circle cx="50%" cy="50%" r="35%" fill="rgba(255,102,153,1)" />
+                <SvgText fill="white" stroke="white" fontSize="40" x="50%" y="50%" textAnchor="middle">Click!</SvgText>
             </Svg>
+            </TouchableOpacity>
             </View>
         <TouchableOpacity
-          style={styles.joinGameButton}
+          style={styles.skipSongButton}
           onPress={() =>{
             
           }}>
@@ -392,11 +397,11 @@ import React, {
       //fontFamily: 'roboto-regular',
       color: 'rgba(255,255,255,1)',
       textAlign: 'center',
-      fontSize: RFPercentage(2.7),
+      fontSize: RFPercentage(2.5),
     },
-    joinGameButton: {
-        marginBottom: '3%',
-        flex: 1,
+    skipSongButton: {
+        marginBottom: '10%',
+        flex: 0.7,
         backgroundColor: 'rgba(255,102,153,1)',
         borderRadius: 9,
         shadowOpacity: 1,
@@ -404,16 +409,32 @@ import React, {
         alignItems: 'center',
         width: '80%',
     },
+    playSongButton: {
+      marginBottom: '3%',
+      flex: 1,
+      backgroundColor: 'rgba(13,60,98,1)',
+      borderRadius: 9,
+      shadowOpacity: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      width: '80%',
+  },
     buttonText: {
-    //fontFamily: 'amaranth-regular',
-    color: 'rgba(255,255,255,1)',
-    fontSize: RFPercentage(3),
-    textAlign: 'center',
+      //fontFamily: 'amaranth-regular',
+      color: 'rgba(255,255,255,1)',
+      fontSize: RFPercentage(3),
+      textAlign: 'center',
+    },
+    buzzerText: {
+      //fontFamily: 'amaranth-regular',
+      color: 'rgba(255,255,255,1)',
+      fontSize: RFPercentage(6),
+      textAlign: 'center',
     },
     circleContainer: {
-        width: 309,
+        width: '80%',
         flex: 4,
-        backgroundColor: 'green',
+        //backgroundColor: 'green',
         justifyContent: 'center',
         alignItems: 'center'
     },

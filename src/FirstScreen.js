@@ -20,6 +20,8 @@ import MainMultiplayer from './two-player-screens/MainMultiplayer';
 import CreateGame from './two-player-screens/CreateGame';
 import JoinGame from './two-player-screens/JoinGame';
 import MultiPlayerQuiz from './two-player-screens/MultiPlayerQuiz';
+import WaitUsers from './two-player-screens/WaitUsers';
+import Leaderboard from './two-player-screens/Leaderboard';
 Icon.loadFont();
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -117,6 +119,11 @@ function FirstScreen(props) {
             options={headerBarDefaultOption}
           /> 
           <Stack.Screen
+            name="WaitUsers"
+            component={WaitUsers}
+            options={headerBarDefaultOption}
+          /> 
+          <Stack.Screen
             name="MultiPlayerQuiz"
             component={MultiPlayerQuiz}
             options={{
@@ -125,7 +132,26 @@ function FirstScreen(props) {
                 backgroundColor: 'rgba(14,134,226,0.9)',
                 borderColor: 'white',
                 borderBottomWidth: 0,
-                //opacity: 0.9,
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                color: 'white',
+                fontWeight: 'bold',
+                fontSize: RFPercentage(4.5),
+              },
+              gestureEnabled: false,
+              headerLeft: null,
+            }}
+          />
+          <Stack.Screen
+            name="Leaderboard"
+            component={Leaderboard}
+            options={{
+              title: 'Tunelyze',
+              headerStyle: {
+                backgroundColor: 'rgba(14,134,226,0.9)',
+                borderColor: 'white',
+                borderBottomWidth: 0,
               },
               headerTintColor: '#fff',
               headerTitleStyle: {
