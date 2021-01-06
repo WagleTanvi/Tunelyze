@@ -1,5 +1,5 @@
 import React, {Component, useEffect, useState} from 'react';
-//import analytics, {firebase} from '@react-native-firebase/analytics';
+import analytics, {firebase} from '@react-native-firebase/analytics';
 import {
   StyleSheet,
   View,
@@ -9,14 +9,14 @@ import {
   Text,
   ActivityIndicator,
 } from 'react-native';
-import authHandler from './model/authenticationHandler';
+import authHandler from '../authenticationHandler';
 import {connect} from 'react-redux';
 import {
   setAccessToken,
   setRefreshToken,
   setExpr,
   setSigingIn,
-} from './redux/authenticationSlice';
+} from '../redux/authenticationSlice';
 import Modal from 'react-native-modal';
 import {RFPercentage} from 'react-native-responsive-fontsize';
 
@@ -29,12 +29,12 @@ function Main(props) {
   //this.props.navigation.dispatch(resetAction);
   return (
     <ImageBackground
-      source={require('./assets/images/james-owen-c-NBiJrhwdM-unsplash.jpg')}
+      source={require('../assets/images/james-owen-c-NBiJrhwdM-unsplash.jpg')}
       resizeMode="stretch"
       style={styles.image}
       imageStyle={styles.image_imageStyle}>
       <Image
-        source={require('./assets/images/Picture1.png')}
+        source={require('../assets/images/Picture1.png')}
         resizeMode="contain"
         style={styles.image2}
       />
@@ -45,11 +45,12 @@ function Main(props) {
           size="large"
         />
       </Modal>
+      <View style={styles.endWrapperFiller} />
       <View style={styles.button2Column}>
         <TouchableOpacity
           style={styles.button}
           onPress={async () => {
-            //await analytics().logEvent('button_press');
+            await analytics().logEvent('button_press');
             setActivityLoading(true);
             //console.log(props);
             var authenticated = null;
@@ -104,14 +105,7 @@ function Main(props) {
           }}>
           <Text style={styles.onePlayer}>One Player</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.twoPlayer}
-          onPress={() => {
-            console.log("Play with Friends");
-            props.navigation.navigate('MainMultiPlayer');
-          }}>
-          <Text style={styles.howToPlay}>Play with Friends</Text>
-        </TouchableOpacity>
+
         <TouchableOpacity
           style={styles.button1}
           onPress={() =>
@@ -138,21 +132,11 @@ const styles = StyleSheet.create({
   },
   button: {
     marginVertical: '3%',
-    flex: 2,
+    flex: 3,
     backgroundColor: 'rgba(105,156,252,1)',
     borderRadius: 9,
     shadowOpacity: 1,
-    width: '70%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  twoPlayer: {
-    marginVertical: '3%',
-    flex: 2,
-    backgroundColor: 'rgba(0,83,143,1)',
-    borderRadius: 9,
-    shadowOpacity: 1,
-    width: '70%',
+    width: '65%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -165,13 +149,13 @@ const styles = StyleSheet.create({
   },
   button1: {
     marginVertical: '3%',
-    flex: 2,
+    flex: 3,
     backgroundColor: 'rgba(255,102,153,1)',
     borderRadius: 9,
     shadowOpacity: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    width: '70%',
+    width: '65%',
   },
   howToPlay: {
     //fontFamily: 'amaranth-regular',
@@ -180,7 +164,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   button2Column: {
-    flex: 1.5,
+    flex: 1,
     width: '90%',
     //backgroundColor: 'red',
     alignItems: 'center',

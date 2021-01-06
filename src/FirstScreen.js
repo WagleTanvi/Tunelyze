@@ -16,10 +16,29 @@ import Onboarding from './WalkThrough/Onboarding';
 import {setOnboarding} from './redux/authenticationSlice';
 import {RFPercentage} from 'react-native-responsive-fontsize';
 import AsyncStorage from '@react-native-community/async-storage';
+import MainMultiplayer from './two-player-screens/MainMultiplayer';
+import CreateGame from './two-player-screens/CreateGame';
+import JoinGame from './two-player-screens/JoinGame';
+import MultiPlayerQuiz from './two-player-screens/MultiPlayerQuiz';
 Icon.loadFont();
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
+const headerBarDefaultOption = {
+  title: 'Tunelyze',
+  headerStyle: {
+    backgroundColor: 'rgba(14,134,226,0.9)',
+    borderColor: 'white',
+    borderBottomWidth: 0,
+  },
+  headerTintColor: '#fff',
+  headerTitleStyle: {
+    color: 'white',
+    fontWeight: 'bold',
+    fontSize: RFPercentage(4.5),
+  },
+  gestureEnabled: false,
+}
 /* Toggles Between onboarding and home screen */
 function FirstScreen(props) {
   /* If onboarding is false  - show the screens */
@@ -47,23 +66,7 @@ function FirstScreen(props) {
           <Stack.Screen
             name="Genres"
             component={Genre}
-            options={{
-              title: 'Tunelyze',
-              headerStyle: {
-                backgroundColor: 'rgba(14,134,226,0.9)',
-                borderColor: 'white',
-                borderBottomWidth: 0,
-                //opacity: 0.9,
-              },
-              headerTintColor: '#fff',
-              headerTitleStyle: {
-                color: 'white',
-                fontWeight: 'bold',
-                fontSize: RFPercentage(4.5),
-              },
-              //headerTitle: props => <LogoTitle {...props} />,
-            }}
-            //options={{headerTitle: props => <LogoTitle {...props} />}}
+            options={headerBarDefaultOption}
           />
           <Stack.Screen
             name="Playlist"
@@ -96,6 +99,26 @@ function FirstScreen(props) {
           <Stack.Screen
             name="ScoreBoard"
             component={ScoreBoard}
+            options={headerBarDefaultOption}
+          />
+          <Stack.Screen
+            name="MainMultiPlayer"
+            component={MainMultiplayer}
+            options={headerBarDefaultOption}
+          />
+          <Stack.Screen
+            name="CreateGame"
+            component={CreateGame}
+            options={headerBarDefaultOption}
+          /> 
+          <Stack.Screen
+            name="JoinGame"
+            component={JoinGame}
+            options={headerBarDefaultOption}
+          /> 
+          <Stack.Screen
+            name="MultiPlayerQuiz"
+            component={MultiPlayerQuiz}
             options={{
               title: 'Tunelyze',
               headerStyle: {
@@ -111,8 +134,9 @@ function FirstScreen(props) {
                 fontSize: RFPercentage(4.5),
               },
               gestureEnabled: false,
+              headerLeft: null,
             }}
-          />
+          /> 
           <Stack.Screen
             name="Walkthrough"
             component={Onboarding}
