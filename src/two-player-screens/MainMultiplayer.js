@@ -48,7 +48,7 @@ function MainMultiPlayer(props) {
           style={styles.joinGameButton}
           onPress={() =>{
             console.log("CreateGame")
-            props.navigation.navigate('Leaderboard');
+            props.navigation.navigate('TooLate');
           }}>
           <Text style={styles.buttonText}>Join Game</Text>
         </TouchableOpacity>

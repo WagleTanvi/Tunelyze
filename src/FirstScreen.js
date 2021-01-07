@@ -22,6 +22,8 @@ import JoinGame from './two-player-screens/JoinGame';
 import MultiPlayerQuiz from './two-player-screens/MultiPlayerQuiz';
 import WaitUsers from './two-player-screens/WaitUsers';
 import Leaderboard from './two-player-screens/Leaderboard';
+import Buzzed from './two-player-screens/Buzzed';
+import TooLate from './two-player-screens/TooLate';
 Icon.loadFont();
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -123,6 +125,20 @@ function FirstScreen(props) {
             component={WaitUsers}
             options={headerBarDefaultOption}
           /> 
+          <Stack.Screen
+            name="Buzzed"
+            component={Buzzed}
+            options={{
+              headerShown: false,
+            }}
+          />
+          <Stack.Screen
+            name="TooLate"
+            component={TooLate}
+            options={{
+              headerShown: false,
+            }}
+          />
           <Stack.Screen
             name="MultiPlayerQuiz"
             component={MultiPlayerQuiz}

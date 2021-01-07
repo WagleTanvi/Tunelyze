@@ -6,7 +6,7 @@ import {
   ImageBackground,
   TouchableOpacity,
   Text,
-  FlatList
+  TextInput
 } from 'react-native';
 import {connect} from 'react-redux';
 import {
@@ -16,67 +16,46 @@ import {
   setSigingIn,
 } from '../redux/authenticationSlice';
 import {RFPercentage} from 'react-native-responsive-fontsize';
+import Svg, { Circle, Text as SvgText } from "react-native-svg";
 
-const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      username: 'albuswags',
-      score: 100
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      username: 'readdonttalk',
-      score: 50
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      username: 'harrygoblet4',
-      score: 10
-    },
-  ];
-const Item = ({ username, score, index }) => (
-    <View style={styles.item}>
-      <View style={{flex: 4}}><Text style={styles.description}>{index+1}) {username} </Text></View>
-      <View style={{flex: 2}}><Text style={styles.scoreText}>+{score}</Text></View>
-    </View>
-  );
-
-const renderItem = ({ item, index }) => (
-    <Item username={item.username} index={index} score={item.score}/>
-);
-
-function Leaderboard(props) {
+function Buzzed(props) {
 
   return (
     <ImageBackground
       source={require('../assets/images/background.jpg')}
       resizeMode="stretch"
-      style={styles.image}
-      imageStyle={styles.image_imageStyle}>
+      style={styles.image}>
       <View style={styles.button2Column}>
+        <View style={styles.topTitle}>
+            <Text style={styles.title}>You buzzed first!</Text>
+        </View>
         <View style={styles.topTextView}>
-            <Text style={styles.title}>My Playlist</Text>
+            <Text style={styles.title}>15 seconds</Text>
         </View>
         <View style={styles.mainView}>
-            <View style={{flex:0.5}}>
-                <Text style={styles.subtitle}>Leaderboard</Text>
-            </View>
-            <View style={styles.listView}>
-                <FlatList
-                    data={DATA}
-                    renderItem={renderItem}
-                    keyExtractor={item => item.id}
-                    style={styles.listStyle}
-                />
+            <View style={{backgroundColor: 'rgba(255,255,255,1)', width: '100%', height: "65%", marginTop: '5%', borderRadius: 10, justifyContent: 'center', alignItems: 'center'}}>
+                <View style={{backgroundColor: 'rgba(255,102,153,1)', width: '90%', height: "90%", borderRadius: 10, padding: "5%"}}>
+                    <View style={{flexDirection: 'row', marginHorizontal: '5%', flex: 2.5, justifyContent: 'center', alignItems: 'center'}}> 
+                        <Text style={styles.description}>Song</Text>
+                        <TextInput placeholder="Song Name" style={styles.textInputStyle}></TextInput>
+                    </View>
+                    <View style={{flexDirection: 'row', marginHorizontal: '5%', flex: 2.5, justifyContent: 'center', alignItems: 'center', marginBottom: "3%"}}> 
+                        <Text style={styles.description}>Artist</Text>
+                        <TextInput placeholder="Artist Name" style={styles.textInputStyle}></TextInput>
+                    </View> 
+                    <View style={{flexDirection: 'row', marginHorizontal: '5%', flex: 1, justifyContent: 'center'}}> 
+                        <TouchableOpacity style={styles.submitButton}>
+                            <Text style={styles.buttonText}>Submit</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={styles.cancelButton}>
+                            <Text style={styles.buttonText}>Cancel</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
             </View>
         </View>
-        <TouchableOpacity
-          style={styles.joinGameButton}
-          onPress={() =>{
-            props.navigation.navigate('Home');
-          }}>
-          <Text style={styles.buttonText}>Play Again</Text>
-        </TouchableOpacity>
+        <View style={styles.filler}>
+        </View>
       </View>
     </ImageBackground>
   );
@@ -87,38 +66,55 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
   },
-  image_imageStyle: {},
-  endWrapperFiller: {
+  filler: {
     flex: 1,
   },
-  createGameButton: {
-    marginBottom: '2%',
-    flex: 1.5,
-    backgroundColor: 'rgba(0,83,143,1)',
-    borderRadius: 9,
-    shadowOpacity: 1,
-    width: '80%',
-    justifyContent: 'center',
-    alignItems: 'center',
+  textInputStyle:{
+    backgroundColor: "white", 
+    height: "60%", 
+    flex: 4,
+    textAlign: 'center',
+    fontSize: RFPercentage(2.5),
+    borderRadius: 5
   },
   topTextView: {
     marginTop: '2.5%',
     flex: 0.5,
+    width: '80%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0,83,143,1)',
+    borderRadius: 4
+  },
+  topTitle: {
+    marginTop: '5%',
+    flex: 0.5,
     width: '90%',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   mainView: {
     marginVertical: '5%',
     flex: 4,
     width: '90%',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    borderRadius: 3
+  },
+  submitButton: {
+    marginHorizontal: '5%',
+    flex: 3,
+    backgroundColor: 'rgba(105,156,252,1)',
+    borderRadius: 9,
+    shadowOpacity: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    width: '80%',
   },
-  joinGameButton: {
-    marginBottom: '3%',
-    flex: 0.5,
-    backgroundColor: 'rgba(105,156,252,1)',
+  cancelButton: {
+    marginHorizontal: '5%',
+    flex: 3,
+    backgroundColor: 'rgba(0,83,143,1)',
     borderRadius: 9,
     shadowOpacity: 1,
     justifyContent: 'center',
@@ -134,9 +130,10 @@ const styles = StyleSheet.create({
   description: {
     //fontFamily: 'amaranth-regular',
     color: 'rgba(255,255,255,1)',
-    fontSize: RFPercentage(2.5),
+    fontSize: RFPercentage(3),
     textAlign: 'left',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    flex: 2,
   },
   scoreText: {
     //fontFamily: 'amaranth-regular',
@@ -208,4 +205,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Leaderboard);
+)(Buzzed);
